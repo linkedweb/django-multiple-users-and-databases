@@ -31,5 +31,13 @@ class Listing(models.Model):
     is_published = models.BooleanField(default=False)
     date_created = models.DateTimeField(default=now)
 
+    def delete(self):
+        self.main_photo.storage.delete(self.main_photo.name)
+        self.photo_1.storage.delete(self.photo_1.name)
+        self.photo_2.storage.delete(self.photo_2.name)
+        self.photo_3.storage.delete(self.photo_3.name)
+
+        super().delete()
+
     def __str__(self):
         return self.title
