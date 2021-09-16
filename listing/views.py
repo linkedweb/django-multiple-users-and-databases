@@ -64,28 +64,19 @@ class ManageListingView(APIView):
         try:
             price = int(price)
         except:
-            return Response(
-                {'error': 'Price must be an integer'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return -1
 
         bedrooms = data['bedrooms']
         try:
             bedrooms = int(bedrooms)
         except:
-            return Response(
-                {'error': 'Bedrooms must be an integer'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return -2
 
         bathrooms = data['bathrooms']
         try:
             bathrooms = float(bathrooms)
         except:
-            return Response(
-                {'error': 'Bathrooms must be a floating point value'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return -3
 
         if bathrooms <= 0 or bathrooms >= 10:
             bathrooms = 1.0
@@ -155,6 +146,22 @@ class ManageListingView(APIView):
 
             data = self.retrieve_values(data)
 
+            if data == -1:
+                return Response(
+                    {'error': 'Price must be an integer'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            elif data == -2:
+                return Response(
+                    {'error': 'Bedrooms must be an integer'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            elif data == -3:
+                return Response(
+                    {'error': 'Bathrooms must be a floating point value'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
             title = data['title']
             slug = data['slug']
             address = data['address']
@@ -223,6 +230,22 @@ class ManageListingView(APIView):
             data = request.data
 
             data = self.retrieve_values(data)
+
+            if data == -1:
+                return Response(
+                    {'error': 'Price must be an integer'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            elif data == -2:
+                return Response(
+                    {'error': 'Bedrooms must be an integer'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            elif data == -3:
+                return Response(
+                    {'error': 'Bathrooms must be a floating point value'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             title = data['title']
             slug = data['slug']
